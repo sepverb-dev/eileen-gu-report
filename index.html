@@ -17,6 +17,10 @@
     --paper: #faf8f3;
   }
 
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
@@ -540,11 +544,14 @@
         <div class="pillar-title">信念与<em>价值</em>体系</div>
         <div class="pillar-body">从不为金牌而滑雪，而是因为热爱。用内驱力代替外部压力，失误的定义只有一种：逃避。</div>
       </div>
+      <div class="pillar-card">
+        <div class="pillar-num">05</div>
+        <div class="pillar-title">多线并行的<em>判断逻辑</em></div>
+        <div class="pillar-body">她的多件事之间存在互养关系，而非互抢资源。关键节点会主动砍线集中突破。多线奏效的前提是先建立单任务切换的基础习惯。</div>
+      </div>
     </div>
   </div>
 </section>
-
-<!-- SECTION 1: 时间管理 -->
 <section class="deep-section">
   <div class="container">
     <div class="deep-header">
@@ -734,6 +741,80 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- SECTION 5: 多线并行 -->
+<section class="deep-section">
+  <div class="container">
+    <div class="deep-header">
+      <div class="deep-number">五</div>
+      <div class="deep-title-group">
+        <span class="deep-category">Multi-line vs Focus</span>
+        <h2 class="deep-title">多线并行还是<br>集中突破？</h2>
+      </div>
+    </div>
+
+    <p style="font-size:0.9rem; color:var(--mist); margin-bottom:2rem; line-height:1.9;">
+      这是很多人面对谷爱凌时真正想问的问题：<br>
+      <em style="color:var(--ink);">"我全力以赴一件事都未必卓越，她凭什么能同时做好几件？"</em>
+    </p>
+
+    <div class="quote-block" style="margin-bottom:2.5rem;">
+      <p class="quote-text">先破一个认知误区——她的几件事之间不是在"分蛋糕"，而是在"做大蛋糕"。滑雪、学业、时尚，每一件都在滋养其他的。这是多线并行奏效的前提，也是判断你是否适合多线的核心标准。</p>
+      <p class="quote-attr">— 基于谷爱凌案例的推导</p>
+    </div>
+
+    <ul class="habits-list">
+      <li class="habit-item">
+        <div class="habit-icon">⇄</div>
+        <div>
+          <div class="habit-name">她的多件事之间存在深度互养关系</div>
+          <div class="habit-desc">滑雪训练培养了极致专注力，这个专注力迁移到学习上，让她效率远超普通人；学物理和数学强化了对动作轨迹的计算能力，反哺了滑雪技术；时尚活动训练了在压力下的表现力，又强化了赛场心理素质。三件事形成正向循环，而非互相消耗。</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">◈</div>
+        <div>
+          <div class="habit-name">她也会主动砍线——关键节点集中突破</div>
+          <div class="habit-desc">备战冬奥时，她选择将斯坦福学业延后一年，把全部资源集中到训练上。她不是什么都同时推进的——多线是常态，砍线是战略选择。真正的逻辑是：平时多线互养，关键节点集中爆发。</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">◎</div>
+        <div>
+          <div class="habit-name">"碎片时间完成学业"的真相</div>
+          <div class="habit-desc">这不只是"挤时间"的技巧，而是她每次学习虽短但100%专注，效率密度极高。可复制的部分：单任务切换习惯 + 碎片时间意识。难以复制的部分：她从小训练出的专注力密度，以及极高的学习基础能力。</div>
+        </div>
+      </li>
+    </ul>
+
+    <div style="margin-top:2.5rem; padding:2rem; background:var(--snow); border-left:3px solid var(--gold);">
+      <p style="font-family:'Noto Serif SC',serif; font-weight:700; font-size:0.9rem; color:var(--ink); margin-bottom:1.2rem; letter-spacing:0.05em;">判断框架：你应该集中还是多线？</p>
+      <div style="display:grid; gap:0.8rem;">
+        <div style="font-size:0.85rem; color:#5a5040; line-height:1.8;">
+          <strong style="color:var(--ink);">问题一：</strong>你的几件事之间有互养关系吗，还是真的在互抢资源？<br>
+          <span style="color:var(--mist);">→ 互养：保留多线，但每件事都要有独立专注时间块</span><br>
+          <span style="color:var(--mist);">→ 互抢：必须砍线，先打透一个再扩线</span>
+        </div>
+        <div style="font-size:0.85rem; color:#5a5040; line-height:1.8;">
+          <strong style="color:var(--ink);">问题二：</strong>你卡住的原因是"精力不够"还是"方法不对"？<br>
+          <span style="color:var(--mist);">→ 精力不够：砍线集中</span><br>
+          <span style="color:var(--mist);">→ 方法不对：砍线也救不了，先把方法找对</span>
+        </div>
+        <div style="font-size:0.85rem; color:#5a5040; line-height:1.8;">
+          <strong style="color:var(--ink);">问题三：</strong>你是否已经建立了"单任务切换"的基础习惯？<br>
+          <span style="color:var(--mist);">→ 没有：先练这个，否则多线只会变成多线混跑</span><br>
+          <span style="color:var(--mist);">→ 有：可以尝试增加一条线，观察是否互养</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-block" style="margin-top:2.5rem;">
+      <p class="quote-text">真正的核心问题不是"要不要多线"，而是：哪一件事是你真正热爱、做起来不费力的？从那一件开始打透，其他的事会自然找到位置。</p>
+      <p class="quote-attr">— 谷爱凌案例对普通人最重要的一个启示</p>
+    </div>
+
   </div>
 </section>
 
