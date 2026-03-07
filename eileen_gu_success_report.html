@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>谷爱凌·成功密码</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1008;
+    --gold: #c9922a;
+    --gold-light: #e8c070;
+    --snow: #f5f2ec;
+    --frost: #e8e4da;
+    --red: #b83232;
+    --mist: #8a8070;
+    --paper: #faf8f3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--ink);
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(201,146,42,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 30%, rgba(184,50,50,0.08) 0%, transparent 60%);
+  }
+
+  .mountain-bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 45%;
+    opacity: 0.06;
+    background: 
+      linear-gradient(135deg, transparent 0%, transparent 30%, var(--gold) 30%, var(--gold) 32%, transparent 32%),
+      linear-gradient(155deg, transparent 0%, transparent 45%, #fff 45%, #fff 47%, transparent 47%),
+      linear-gradient(120deg, transparent 0%, transparent 20%, #fff 20%, #fff 22%, transparent 22%);
+  }
+
+  .snowflakes {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .sf {
+    position: absolute;
+    color: rgba(255,255,255,0.15);
+    font-size: 8px;
+    animation: fall linear infinite;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 0.5; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+
+  .hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s ease forwards;
+  }
+
+  .hero-title {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 900;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s ease forwards;
+  }
+
+  .hero-title span {
+    color: var(--gold);
+  }
+
+  .hero-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.15em;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s ease forwards;
+  }
+
+  .hero-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s ease forwards;
+  }
+
+  .hero-tagline {
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.4);
+    opacity: 0;
+    animation: fadeUp 0.8s 1.1s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* MAIN CONTENT */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* INTRO */
+  .intro-section {
+    padding: 6rem 0 4rem;
+    text-align: center;
+  }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    padding: 0.3rem 1rem;
+    border: 1px solid rgba(201,146,42,0.3);
+  }
+
+  .intro-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    color: var(--mist);
+    line-height: 2;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  /* PILLAR CARDS */
+  .pillars {
+    padding: 2rem 0 6rem;
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5px;
+    background: var(--frost);
+    border: 1.5px solid var(--frost);
+  }
+
+  .pillar-card {
+    background: var(--paper);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .pillar-card:hover {
+    background: var(--snow);
+  }
+
+  .pillar-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--gold);
+    transition: height 0.4s ease;
+  }
+
+  .pillar-card:hover::after {
+    height: 100%;
+  }
+
+  .pillar-num {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 3rem;
+    color: var(--frost);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .pillar-title {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  .pillar-title em {
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  .pillar-body {
+    font-size: 0.88rem;
+    color: #5a5040;
+    line-height: 1.9;
+  }
+
+  /* DEEP DIVE SECTIONS */
+  .deep-section {
+    padding: 5rem 0;
+    border-top: 1px solid var(--frost);
+  }
+
+  .deep-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .deep-number {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 5rem;
+    color: var(--frost);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .deep-title-group {}
+
+  .deep-category {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .deep-title {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 700;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  .habits-list {
+    list-style: none;
+  }
+
+  .habit-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--frost);
+    align-items: start;
+  }
+
+  .habit-icon {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+
+  .habit-name {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+    color: var(--ink);
+  }
+
+  .habit-desc {
+    font-size: 0.87rem;
+    color: #5a5040;
+    line-height: 1.8;
+  }
+
+  /* QUOTE BLOCKS */
+  .quote-block {
+    margin: 3rem 0;
+    padding: 2.5rem 3rem;
+    background: var(--ink);
+    position: relative;
+  }
+
+  .quote-block::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 6rem;
+    color: var(--gold);
+    opacity: 0.3;
+    position: absolute;
+    top: -1rem;
+    left: 2rem;
+    line-height: 1;
+  }
+
+  .quote-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: rgba(255,255,255,0.9);
+    line-height: 1.9;
+    position: relative;
+    z-index: 1;
+    font-weight: 400;
+  }
+
+  .quote-attr {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-align: right;
+  }
+
+  /* BELIEFS SECTION */
+  .beliefs-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .belief-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--snow);
+    border-left: 3px solid var(--gold);
+    align-items: start;
+  }
+
+  .belief-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 500;
+    padding-top: 0.15rem;
+  }
+
+  .belief-content {
+    font-size: 0.88rem;
+    color: #4a4030;
+    line-height: 1.8;
+  }
+
+  .belief-content strong {
+    font-family: 'Noto Serif SC', serif;
+    color: var(--ink);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.95rem;
+  }
+
+  /* TAKEAWAYS */
+  .takeaway-section {
+    padding: 5rem 0;
+    background: var(--ink);
+    margin: 0 -2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .takeaway-section .section-tag {
+    color: var(--gold-light);
+    border-color: rgba(201,146,42,0.4);
+  }
+
+  .takeaway-section .deep-title {
+    color: #fff;
+  }
+
+  .takeaways-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .takeaway-card {
+    border-top: 1px solid rgba(201,146,42,0.4);
+    padding-top: 1.5rem;
+  }
+
+  .takeaway-step {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.8rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .takeaway-title {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+
+  .takeaway-body {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.8;
+  }
+
+  /* FOOTER */
+  .report-footer {
+    padding: 3rem 0;
+    text-align: center;
+    border-top: 1px solid var(--frost);
+    color: var(--mist);
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+  }
+
+  .footer-logo {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 680px) {
+    .pillars-grid { grid-template-columns: 1fr; }
+    .takeaways-grid { grid-template-columns: 1fr; }
+    .belief-row { grid-template-columns: 1fr; gap: 0.5rem; }
+    .quote-block { padding: 2rem 1.5rem; }
+    .deep-header { flex-direction: column; gap: 0.5rem; }
+    .deep-number { font-size: 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="snowflakes" id="snowflakes"></div>
+  <div class="mountain-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">成功解码 · Research Report</p>
+    <h1 class="hero-title">谷<span>爱</span>凌</h1>
+    <p class="hero-subtitle">Eileen Gu · 高效人生的底层逻辑</p>
+    <div class="hero-divider"></div>
+    <p class="hero-tagline">方法论 · 行动模式 · 行为习惯 · 信念体系</p>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro-section">
+  <div class="container">
+    <span class="section-tag">关于她</span>
+    <p class="intro-text">
+      冬奥两金一银、斯坦福学霸、顶尖模特——谷爱凌的成就令人叹服。
+      但在镁光灯之外，<strong style="color:var(--ink)">99%的时间是无人见证的努力</strong>。
+      这份报告深度梳理她公开分享的方法论，帮你找到可复制的行动框架。
+    </p>
+  </div>
+</section>
+
+<!-- FOUR PILLARS OVERVIEW -->
+<section class="pillars">
+  <div class="container">
+    <span class="section-tag">四大支柱</span>
+    <div class="pillars-grid" style="margin-top:2rem;">
+      <div class="pillar-card">
+        <div class="pillar-num">01</div>
+        <div class="pillar-title">时间与<em>专注</em>管理</div>
+        <div class="pillar-body">日程精确到分钟，每件事单独全力以赴，绝不多线程混跑。碎片时间零浪费，随时随地切换学习模式。</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">02</div>
+        <div class="pillar-title">身体与<em>恢复</em>策略</div>
+        <div class="pillar-body">每天睡足10小时是她最大的"秘密武器"。把休息视为与训练同等重要的投资，而非奢侈。</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">03</div>
+        <div class="pillar-title">情绪与<em>心理</em>建设</div>
+        <div class="pillar-body">5分钟哭泣法快速释放情绪，之后立刻复盘聚焦。把恐惧转化为肾上腺素，视压力为动力。</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">04</div>
+        <div class="pillar-title">信念与<em>价值</em>体系</div>
+        <div class="pillar-body">从不为金牌而滑雪，而是因为热爱。用内驱力代替外部压力，失误的定义只有一种：逃避。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 1: 时间管理 -->
+<section class="deep-section">
+  <div class="container">
+    <div class="deep-header">
+      <div class="deep-number">一</div>
+      <div class="deep-title-group">
+        <span class="deep-category">Time & Focus Management</span>
+        <h2 class="deep-title">时间管理与<br>极致专注</h2>
+      </div>
+    </div>
+    
+    <ul class="habits-list">
+      <li class="habit-item">
+        <div class="habit-icon">⟳</div>
+        <div>
+          <div class="habit-name">单线程切换法</div>
+          <div class="habit-desc">谷爱凌说自己"感觉体内有五六个不同的爱凌"——但每次只让其中一个上场。做作业时100%专注作业，滑雪时100%专注滑雪，完全不想其他事。切换时借助换衣服等"仪式感动作"清空大脑缓存，帮助快速进入下一个状态。</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">⊕</div>
+        <div>
+          <div class="habit-name">精确到分钟的日程规划</div>
+          <div class="habit-desc">她自称"时间管理大师"，日常计划精确到分钟级别。比赛中每个环节都需精算，连每一度气温变化都纳入考量——这种习惯从运动渗透到生活的每个角落。</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">◈</div>
+        <div>
+          <div class="habit-name">碎片时间零浪费</div>
+          <div class="habit-desc">9岁起就练就了在飞机上读书、在车上温习的能力。高中时三年完成四年课程，靠的正是把别人刷手机的间隙转化为学习时间。化妆时做作业，飞机上补论文，这是她一以贯之的习惯。</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">▽</div>
+        <div>
+          <div class="habit-name">动作预演（Mental Rehearsal）</div>
+          <div class="habit-desc">赛前，她会用5个不同角度在脑海中"过电影"：自己的视角、跳台边的视角、空中俯拍角度、落地角度，以及观众席角度。甚至连耳边的风速声都会在脑中模拟——确认有把握才真正起跳。</div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="quote-block">
+      <p class="quote-text">我的日常计划都精确到分钟了。比赛也同样如此，每一个环节都需要精确计算，甚至每一度的气温变化都要考虑到。</p>
+      <p class="quote-attr">— 谷爱凌，接受新华社采访</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: 恢复策略 -->
+<section class="deep-section">
+  <div class="container">
+    <div class="deep-header">
+      <div class="deep-number">二</div>
+      <div class="deep-title-group">
+        <span class="deep-category">Recovery & Energy</span>
+        <h2 class="deep-title">身体恢复与<br>能量管理</h2>
+      </div>
+    </div>
+    
+    <ul class="habits-list">
+      <li class="habit-item">
+        <div class="habit-icon">☽</div>
+        <div>
+          <div class="habit-name">每天睡够10小时</div>
+          <div class="habit-desc">这是她反复强调的"秘密武器"。她认为睡眠不只是休息，也是大脑复习当天所学的时间。她的妈妈的教育哲学简洁有力：第一，多睡觉；第二，多学习；第三，多玩。睡眠是高效运转的基础，而非懒惰的借口。</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">◐</div>
+        <div>
+          <div class="habit-name">劳逸分明的节奏</div>
+          <div class="habit-desc">冬奥期间，她的一天通常从上午9-10点开始，下午3-4点集中复习，四点后与朋友出去玩，晚上9点回家。高强度集中 + 真正的休息，而非带着愧疚感的"假休息"。玩是她恢复状态的重要部分。</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">⚡</div>
+        <div>
+          <div class="habit-name">用兴趣调节大脑</div>
+          <div class="habit-desc">滑雪4小时后，她会选择写日记或自学感兴趣的物理、化学，因为"是自己感兴趣的内容，所以主动愿意学，也能调节大脑"。换一种喜欢的事来"切换"，比强行休息更有效。</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- SECTION 3: 情绪管理 -->
+<section class="deep-section">
+  <div class="container">
+    <div class="deep-header">
+      <div class="deep-number">三</div>
+      <div class="deep-title-group">
+        <span class="deep-category">Emotional Intelligence</span>
+        <h2 class="deep-title">情绪管理与<br>压力转化</h2>
+      </div>
+    </div>
+
+    <ul class="habits-list">
+      <li class="habit-item">
+        <div class="habit-icon">▲</div>
+        <div>
+          <div class="habit-name">5分钟哭泣法</div>
+          <div class="habit-desc">失误或情绪崩溃后，她会定一个5分钟的闹钟全力哭泣——她认为哭泣是科学上效率最高的情绪释放方式。5分钟结束，立刻清空负面情绪，重新聚焦动作细节。这不是压抑情绪，而是给情绪设定边界。</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">◉</div>
+        <div>
+          <div class="habit-name">将恐惧转化为燃料</div>
+          <div class="habit-desc">她坦言自己每次上场都会害怕，但"怕每次都会怕，但是不能有犹豫，犹豫是最危险的"。她把恐惧带来的肾上腺素视为上瘾的东西，是让结果更令人兴奋的必要前提。她不消灭恐惧，而是与它同行。</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">◇</div>
+        <div>
+          <div class="habit-name">精神管理比技术更重要</div>
+          <div class="habit-desc">她说"对精神的管理，和运动技巧本身一样重要"，并且很谨慎地保护自己的内心世界——不会轻易把恐惧和脆弱告诉不熟的人。她深知公开软肋会影响自己的竞争状态。</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">✦</div>
+        <div>
+          <div class="habit-name">重定义"失误"</div>
+          <div class="habit-desc">在她的字典里，摔跤不是失误，没赢比赛不是失误。最大的失误只有一种：逃避。这个重定义彻底消除了对结果的恐惧，让她能在任何压力下做出最勇敢的选择。</div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="quote-block">
+      <p class="quote-text">你选择了去赛，就不能有停顿的时刻。怕每次都会怕，但是不能有犹豫。要不然就不赛，你一旦赛了得努力。</p>
+      <p class="quote-attr">— 谷爱凌，人民日报专访 2026年</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: 信念体系 -->
+<section class="deep-section">
+  <div class="container">
+    <div class="deep-header">
+      <div class="deep-number">四</div>
+      <div class="deep-title-group">
+        <span class="deep-category">Belief System</span>
+        <h2 class="deep-title">信念体系与<br>自信建立</h2>
+      </div>
+    </div>
+
+    <div class="beliefs-grid">
+      <div class="belief-row">
+        <div class="belief-label">热爱驱动</div>
+        <div class="belief-content">
+          <strong>不为金牌，而为热爱</strong>
+          她说"我滑雪不是为了拿金牌，我学习不是为了考名校，我做这一切，都是因为我喜欢。"当热爱是原动力，外部结果的好坏就不会摧毁内心的稳定。
+        </div>
+      </div>
+      <div class="belief-row">
+        <div class="belief-label">过程可控论</div>
+        <div class="belief-content">
+          <strong>"体育最诚实，骗不了自己"</strong>
+          结果不可控，但准备可控。她把全部精力放在当下每一次训练、每一条日记、每一个细节上——结果是"水到渠成的副产品"，而非执念追求的目标。
+        </div>
+      </div>
+      <div class="belief-row">
+        <div class="belief-label">自信来源</div>
+        <div class="belief-content">
+          <strong>自信由积累而来，不靠天赋</strong>
+          她在米兰冬奥后说：正是因为日复一日为滑雪倾注的努力，才建立起真正的自信。自信不是天生的感觉，而是你知道自己"把能做的事情全都做完了"。
+        </div>
+      </div>
+      <div class="belief-row">
+        <div class="belief-label">成功定义</div>
+        <div class="belief-content">
+          <strong>上场即是赢</strong>
+          "只要敢于站上赛场，让世界看到自己敢于挑战的态度，这本身就已经是我心里的金牌。"她把勇敢出现在赛场本身定义为成功，这让她永远不会因为"可能输"而退缩。
+        </div>
+      </div>
+      <div class="belief-row">
+        <div class="belief-label">永远突破</div>
+        <div class="belief-content">
+          <strong>把目标拆解到每一天</strong>
+          她说："我现在真正考虑的就是怎么在每个月、每周、每天做最好的自己。"长远目标（如米兰冬奥）不是压力，而是方向；真正的功夫落在每一天的具体行动上。
+        </div>
+      </div>
+      <div class="belief-row">
+        <div class="belief-label">诚实归因</div>
+        <div class="belief-content">
+          <strong>99%是努力，1%留给幸运</strong>
+          她明确区分公众看到的"赢得比赛"和不为人知的99%——自己摔跤、哭泣、怀疑自己的过程。这种清醒的归因让她既不膨胀，也不妄自菲薄。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAKEAWAYS -->
+<section style="background: var(--ink); padding: 5rem 0;">
+  <div class="container">
+    <span class="section-tag" style="color:var(--gold-light); border-color:rgba(201,146,42,0.4);">可以立刻学</span>
+    <h2 style="font-family:'Noto Serif SC',serif; font-size:clamp(1.4rem,3vw,2rem); color:#fff; margin-top:1.5rem; margin-bottom:0.5rem;">如何把她的方法用在自己身上</h2>
+    <p style="color:rgba(255,255,255,0.4); font-size:0.85rem; margin-bottom:3rem;">不需要天赋，只需要系统</p>
+    
+    <div class="takeaways-grid">
+      <div class="takeaway-card">
+        <div class="takeaway-step">Method 01</div>
+        <div class="takeaway-title">单任务专注块</div>
+        <div class="takeaway-body">把今天的任务列出来，每次只做一件。每个任务有固定的"开始仪式"（如泡一杯茶、整理桌面），帮助大脑快速进入专注模式，结束时再用仪式切换。</div>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-step">Method 02</div>
+        <div class="takeaway-title">重新定义失败</div>
+        <div class="takeaway-body">把你认为的"失败清单"写出来，然后问自己：这是真的失败，还是只是过程？用谷爱凌的标准检验——真正的失误只有一种：主动逃避。</div>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-step">Method 03</div>
+        <div class="takeaway-title">情绪定时释放</div>
+        <div class="takeaway-body">下次情绪崩溃时，不要压制，也不要沉溺。设一个5分钟计时器，全力感受情绪。时间到，深呼吸，写下一个具体的"下一步行动"，切回专注状态。</div>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-step">Method 04</div>
+        <div class="takeaway-title">睡眠作为战略</div>
+        <div class="takeaway-body">把睡眠从"不得已的时间浪费"重新框架为"恢复与巩固记忆的核心投资"。设定固定就寝时间，把睡眠质量当成第二天表现的决定性变量来管理。</div>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-step">Method 05</div>
+        <div class="takeaway-title">动作预演习惯</div>
+        <div class="takeaway-body">重要演讲/考试/谈判前，闭上眼睛从多个角度想象全过程。想象自己的感受、可能的障碍、以及应对方式。这比单纯重复练习更能建立真实的自信感。</div>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-step">Method 06</div>
+        <div class="takeaway-title">过程可控清单</div>
+        <div class="takeaway-body">每天晚上问自己：今天我把"能做的事情全都做完了吗"？不评判结果，只评估努力。这一个问题，就是谷爱凌自信心的来源，也可以是你的。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="report-footer">
+  <div class="container">
+    <div class="footer-logo">谷爱凌·成功密码</div>
+    <p>基于公开采访与报道整理 · 2026年研究报告</p>
+  </div>
+</footer>
+
+<script>
+  // Snowflakes
+  const container = document.getElementById('snowflakes');
+  const symbols = ['❄', '✦', '·', '∗', '⊹'];
+  for (let i = 0; i < 40; i++) {
+    const sf = document.createElement('div');
+    sf.className = 'sf';
+    sf.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    sf.style.left = Math.random() * 100 + 'vw';
+    sf.style.animationDuration = (6 + Math.random() * 12) + 's';
+    sf.style.animationDelay = (Math.random() * 10) + 's';
+    sf.style.fontSize = (6 + Math.random() * 10) + 'px';
+    container.appendChild(sf);
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.habit-item, .belief-row, .takeaway-card, .quote-block').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
