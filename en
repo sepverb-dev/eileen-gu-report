@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eileen Gu · The Performance System</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0f0f;
+    --gold: #b8882a;
+    --gold-light: #d4aa60;
+    --snow: #f4f1eb;
+    --frost: #e2ddd4;
+    --mist: #7a7468;
+    --paper: #faf8f3;
+    --slate: #1e2028;
+  }
+
+  @media print {
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--slate);
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 80% 40%, rgba(184,136,42,0.1) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 80% at 10% 70%, rgba(255,255,255,0.03) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .snowflakes { position: absolute; inset: 0; pointer-events: none; }
+  .sf {
+    position: absolute;
+    color: rgba(255,255,255,0.12);
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 0.4; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+
+  .hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+    max-width: 700px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.45em;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s ease forwards;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: clamp(4rem, 12vw, 9rem);
+    color: #fff;
+    line-height: 0.9;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s ease forwards;
+  }
+
+  .hero-name span { color: var(--gold); }
+
+  .hero-subtitle {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.08em;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s ease forwards;
+  }
+
+  .hero-divider {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    margin: 0 auto 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s ease forwards;
+  }
+
+  .hero-tagline {
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.1s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* LAYOUT */
+  .container { max-width: 880px; margin: 0 auto; padding: 0 2rem; }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    padding: 0.3rem 1rem;
+    border: 1px solid rgba(184,136,42,0.3);
+  }
+
+  /* INTRO */
+  .intro-section { padding: 6rem 0 4rem; text-align: center; }
+
+  .intro-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
+    color: var(--mist);
+    line-height: 2;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* PILLARS */
+  .pillars { padding: 2rem 0 6rem; }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--frost);
+    border: 1.5px solid var(--frost);
+    margin-top: 2rem;
+  }
+
+  .pillar-card {
+    background: var(--paper);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .pillar-card:hover { background: var(--snow); }
+
+  .pillar-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.4s ease;
+  }
+
+  .pillar-card:hover::after { width: 100%; }
+
+  .pillar-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 2.5rem;
+    color: var(--frost);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .pillar-title {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.02em;
+  }
+
+  .pillar-title em { color: var(--gold); font-style: normal; }
+  .pillar-body { font-size: 0.82rem; color: #5a5448; line-height: 1.8; }
+
+  /* DEEP SECTIONS */
+  .deep-section { padding: 5rem 0; border-top: 1px solid var(--frost); }
+
+  .deep-header {
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .deep-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 5rem;
+    color: var(--frost);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .deep-category {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .deep-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  /* HABITS */
+  .habits-list { list-style: none; }
+
+  .habit-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--frost);
+    align-items: start;
+  }
+
+  .habit-icon {
+    width: 34px; height: 34px;
+    border: 1px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+
+  .habit-name {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+    color: var(--ink);
+  }
+
+  .habit-desc { font-size: 0.85rem; color: #5a5448; line-height: 1.85; }
+
+  /* QUOTE */
+  .quote-block {
+    margin: 3rem 0;
+    padding: 2.5rem 3rem;
+    background: var(--slate);
+    position: relative;
+  }
+
+  .quote-block::before {
+    content: '"';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 7rem;
+    color: var(--gold);
+    opacity: 0.2;
+    position: absolute;
+    top: -1.5rem; left: 2rem;
+    line-height: 1;
+  }
+
+  .quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: rgba(255,255,255,0.88);
+    line-height: 1.9;
+    position: relative;
+    z-index: 1;
+  }
+
+  .quote-attr {
+    margin-top: 1rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-align: right;
+    text-transform: uppercase;
+  }
+
+  /* SCIENCE CALLOUT */
+  .science-box {
+    background: var(--snow);
+    border-left: 3px solid var(--gold);
+    padding: 1.8rem 2rem;
+    margin: 2rem 0;
+  }
+
+  .science-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
+  .science-text { font-size: 0.87rem; color: #4a4438; line-height: 1.85; }
+  .science-text strong { color: var(--ink); font-weight: 500; }
+
+  /* BELIEFS */
+  .beliefs-grid { display: grid; gap: 1rem; margin-top: 2rem; }
+
+  .belief-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--snow);
+    border-left: 3px solid var(--gold);
+    align-items: start;
+  }
+
+  .belief-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 500;
+    padding-top: 0.15rem;
+  }
+
+  .belief-content { font-size: 0.86rem; color: #4a4438; line-height: 1.8; }
+
+  .belief-content strong {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.92rem;
+  }
+
+  /* INTEGRATION SECTION */
+  .integration-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--frost);
+    margin: 2.5rem 0;
+  }
+
+  .integration-col {
+    background: var(--paper);
+    padding: 2rem 1.5rem;
+  }
+
+  .integration-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: block;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--frost);
+  }
+
+  .integration-items { list-style: none; }
+
+  .integration-items li {
+    font-size: 0.82rem;
+    color: #5a5448;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(226,221,212,0.5);
+    line-height: 1.6;
+  }
+
+  .integration-items li:last-child { border-bottom: none; }
+
+  /* TAKEAWAYS */
+  .takeaways-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .takeaway-card { border-top: 1px solid rgba(184,136,42,0.35); padding-top: 1.5rem; }
+
+  .takeaway-step {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-light);
+    margin-bottom: 0.75rem;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .takeaway-title {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+
+  .takeaway-body { font-size: 0.8rem; color: rgba(255,255,255,0.45); line-height: 1.8; }
+
+  /* FOOTER */
+  .report-footer {
+    padding: 3rem 0;
+    text-align: center;
+    border-top: 1px solid var(--frost);
+    color: var(--mist);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    font-style: italic;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    .pillars-grid { grid-template-columns: 1fr; }
+    .takeaways-grid { grid-template-columns: 1fr; }
+    .integration-grid { grid-template-columns: 1fr; }
+    .belief-row { grid-template-columns: 1fr; gap: 0.5rem; }
+    .quote-block { padding: 2rem 1.5rem; }
+    .deep-header { flex-direction: column; gap: 0.5rem; }
+    .deep-number { font-size: 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="snowflakes" id="snowflakes"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Performance Research<br>Deep Dive · 2026</p>
+    <h1 class="hero-name">Eileen<br><span>Gu</span></h1>
+    <p class="hero-subtitle">The System Behind Multi-Domain Excellence</p>
+    <div class="hero-divider"></div>
+    <p class="hero-tagline">Neuroscience · Habits · Mindset · Integration</p>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro-section">
+  <div class="container">
+    <span class="section-tag">About This Research</span>
+    <p class="intro-text">
+      6 Olympic medals across 6 events. 3 World Championship titles. TIME's 100 Most Influential People.
+      Vogue and Elle covers. Stanford and Oxford. All before 23.
+      This report examines <strong style="color:var(--ink);">the performance system</strong> that makes it possible —
+      and what neuroscience tells us about why it works.
+    </p>
+  </div>
+</section>
+
+<!-- SIX PILLARS -->
+<section class="pillars">
+  <div class="container">
+    <span class="section-tag">Six Pillars</span>
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div class="pillar-num">01</div>
+        <div class="pillar-title">Time &amp; <em>Focus</em></div>
+        <div class="pillar-body">Precision scheduling to the minute. One task at a time, fully. Zero multitasking — only deliberate context switching.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">02</div>
+        <div class="pillar-title">Recovery &amp; <em>Sleep</em></div>
+        <div class="pillar-body">10 hours of sleep is her most powerful performance tool — not a luxury, but a non-negotiable biological investment.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">03</div>
+        <div class="pillar-title">Emotion &amp; <em>Regulation</em></div>
+        <div class="pillar-body">The 5-minute cry method. Fear converted to fuel. Redefining failure as avoidance, not outcome.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">04</div>
+        <div class="pillar-title">Belief &amp; <em>Drive</em></div>
+        <div class="pillar-body">Intrinsic motivation over external validation. Competing for love of the sport, not for medals or rankings.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">05</div>
+        <div class="pillar-title">Multi-domain <em>Strategy</em></div>
+        <div class="pillar-body">Her pursuits are mutually reinforcing, not competing. Skiing builds focus that enhances study. Study sharpens athletic cognition.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-num">06</div>
+        <div class="pillar-title">Brain · Mind · <em>Body</em></div>
+        <div class="pillar-body">Neuroplasticity, mental simulation, journaling, and somatic awareness operating as one integrated system.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 1: FOCUS -->
+<section class="deep-section">
+  <div class="container">
+    <div class="deep-header">
+      <div class="deep-number">I</div>
+      <div class="deep-title-group">
+        <span class="deep-category">Attention Architecture</span>
+        <h2 class="deep-title">Time Management &amp;<br>Extreme Focus</h2>
+      </div>
+    </div>
+
+    <ul class="habits-list">
+      <li class="habit-item">
+        <div class="habit-icon">⟳</div>
+        <div>
+          <div class="habit-name">Single-thread Context Switching</div>
+          <div class="habit-desc">Gu describes having "five or six different Eileens" inside her — but only one runs at a time. When studying, 100% study. When skiing, 100% skiing. She uses deliberate rituals (changing clothes, physical movement) to flush her cognitive RAM between modes, preventing interference between mental states.</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">⊕</div>
+        <div>
+          <div class="habit-name">Minute-level Schedule Precision</div>
+          <div class="habit-desc">Her daily plans are precise to the minute — including in competition, where every variable including temperature changes is pre-calculated. This is not obsessive control but a way of reducing decision fatigue, freeing mental bandwidth for what matters most.</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">◈</div>
+        <div>
+          <div class="habit-name">Zero Wasted Transition Time</div>
+          <div class="habit-desc">Since age 9, she has studied on planes, reviewed notes in gondolas, and done homework in makeup chairs. Three years of high school completed in two, largely through converting dead time into active learning. Not through willpower — through habit architecture.</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">▽</div>
+        <div>
+          <div class="habit-name">Multi-angle Mental Simulation</div>
+          <div class="habit-desc">Before every jump, she mentally rehearses from five distinct perspectives: her own POV, the lip of the pipe, aerial follow-cam, landing zone, and her mother's seat in the stands. She even simulates the sound of wind at each rotation point. Only when the simulation feels right does she drop in.</div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="science-box">
+      <span class="science-label">Neuroscience Note</span>
+      <p class="science-text">Mental simulation activates the same neural pathways as physical execution. <strong>Repeated mental rehearsal strengthens motor circuits</strong> — which is why her pre-jump visualization isn't just confidence-building. It's functional pre-training for the nervous system.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: RECOVERY -->
+<section class="deep-section">
+  <div class="container">
+    <div class="deep-header">
+      <div class="deep-number">II</div>
+      <div class="deep-title-group">
+        <span class="deep-category">Biological Recovery</span>
+        <h2 class="deep-title">Sleep &amp; Energy<br>as Strategy</h2>
+      </div>
+    </div>
+
+    <ul class="habits-list">
+      <li class="habit-item">
+        <div class="habit-icon">☽</div>
+        <div>
+          <div class="habit-name">10 Hours of Sleep — Non-Negotiable</div>
+          <div class="habit-desc">Her most-cited "secret weapon." She views sleep not as passive rest but as active consolidation — the period when the brain processes the day's learning, builds motor memory, and prunes inefficient neural pathways. Her mother's three-rule education philosophy: sleep first, study second, play third.</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">◐</div>
+        <div>
+          <div class="habit-name">Hard Boundaries Between Work and Rest</div>
+          <div class="habit-desc">During the Beijing Olympics: training from 9–10am, focused review 3–4pm, social time 4–9pm, sleep at 9pm. High-intensity concentration followed by genuine rest — not guilty half-rest. Play is part of the performance system, not a break from it.</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">⚡</div>
+        <div>
+          <div class="habit-name">Interest-driven Recovery Switching</div>
+          <div class="habit-desc">After 4 hours of skiing, she shifts to journaling or studying topics she finds genuinely interesting — physics, chemistry. The key: switching to something intrinsically motivating resets the brain more effectively than passive rest, because engagement in a different domain clears the previous cognitive load.</div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="science-box">
+      <span class="science-label">Neuroscience Note</span>
+      <p class="science-text">Sleep is when the brain's glymphatic system clears metabolic waste. <strong>Motor skills and declarative memory are both consolidated during sleep</strong> — meaning her 10-hour commitment directly improves both athletic performance and academic retention simultaneously.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: EMOTION -->
+<section class="deep-section">
+  <div class="container">
+    <div class="deep-header">
+      <div class="deep-number">III</div>
+      <div class="deep-title-group">
+        <span class="deep-category">Emotional Intelligence</span>
+        <h2 class="deep-title">Regulation, Fear &amp;<br>the Redefinition of Failure</h2>
+      </div>
+    </div>
+
+    <ul class="habits-list">
+      <li class="habit-item">
+        <div class="habit-icon">▲</div>
+        <div>
+          <div class="habit-name">The 5-Minute Cry Protocol</div>
+          <div class="habit-desc">After a crash or emotional low, she sets a 5-minute timer and cries — fully, without restraint. When the timer ends, she immediately pivots to analyzing the technical details of what went wrong. This isn't suppression; it's bounded processing. Give the nervous system what it needs, then redirect.</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">◉</div>
+        <div>
+          <div class="habit-name">Fear as Activation, Not Obstacle</div>
+          <div class="habit-desc">"I'm afraid every single time. But you can't hesitate — hesitation is the most dangerous thing." She doesn't eliminate fear; she reframes the adrenaline it generates as performance fuel. The physiological arousal of fear and excitement are nearly identical — the difference is the story you assign to it.</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">◇</div>
+        <div>
+          <div class="habit-name">Guarded Inner World</div>
+          <div class="habit-desc">She explicitly says managing her mental state is as important as technical skill — and that she is careful about who she shares vulnerabilities with. Exposing fear or doubt to the wrong people creates cognitive interference before competition. She protects her internal signal from external noise.</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">✦</div>
+        <div>
+          <div class="habit-name">Redefining the Only Real Failure</div>
+          <div class="habit-desc">Falling is not failure. Losing is not failure. The only failure, in her definition, is avoidance — refusing to show up. This single reframe eliminates outcome anxiety entirely: if the worst thing that can happen is "I didn't try," then trying always wins.</div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="quote-block">
+      <p class="quote-text">If you choose to compete, there can be no pause. Fear will always be there — but hesitation is the most dangerous thing. Either don't race, or once you race, give everything.</p>
+      <p class="quote-attr">— Eileen Gu, People's Daily Interview, 2026</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: BELIEF -->
+<section class="deep-section">
+  <div class="container">
+    <div class="deep-header">
+      <div class="deep-number">IV</div>
+      <div class="deep-title-group">
+        <span class="deep-category">Intrinsic Motivation</span>
+        <h2 class="deep-title">Belief System &amp;<br>Building Real Confidence</h2>
+      </div>
+    </div>
+
+    <div class="beliefs-grid">
+      <div class="belief-row">
+        <div class="belief-label">Love-driven</div>
+        <div class="belief-content">
+          <strong>Not for medals — for love of the sport</strong>
+          "I don't ski to win gold medals. I don't study to get into elite schools. I do all of this because I love it." When intrinsic motivation is the engine, external results lose their power to destabilize. This is the foundation of her psychological stability.
+        </div>
+      </div>
+      <div class="belief-row">
+        <div class="belief-label">Process Control</div>
+        <div class="belief-content">
+          <strong>"Sport is honest — you can't lie to yourself"</strong>
+          Results are uncontrollable. Preparation is. She directs all energy toward the preparation she can control, letting results emerge naturally. When she says she's "proud of herself," it's because she can verify she did everything within her control — not because she won.
+        </div>
+      </div>
+      <div class="belief-row">
+        <div class="belief-label">Earned Confidence</div>
+        <div class="belief-content">
+          <strong>Confidence comes from accumulation, not affirmation</strong>
+          After her Milan gold, she said confidence was built through daily investment in her craft — not through self-talk or external praise. Real confidence is the felt knowledge that "I did everything I could." It's verifiable, not performed.
+        </div>
+      </div>
+      <div class="belief-row">
+        <div class="belief-label">Presence = Victory</div>
+        <div class="belief-content">
+          <strong>Showing up is already winning</strong>
+          "As long as I dare to stand on that slope and show the world my courage to try — that is already my gold medal in my heart." When the bar for "winning" is defined as presence and attempt, fear of failure dissolves completely.
+        </div>
+      </div>
+      <div class="belief-row">
+        <div class="belief-label">Daily Decomposition</div>
+        <div class="belief-content">
+          <strong>Big goals broken into today's actions</strong>
+          "What I'm really thinking about is how to be the best version of myself this month, this week, today." Long-term targets provide direction; daily actions are where the real work lives. The gap between vision and reality is closed one day at a time.
+        </div>
+      </div>
+      <div class="belief-row">
+        <div class="belief-label">99% Unseen</div>
+        <div class="belief-content">
+          <strong>What the world sees is 1% of the reality</strong>
+          "99% of my time is me falling, crying, doubting — but that's exactly the process. Without struggle, winning means nothing." Radically honest attribution: success is earned, not gifted. This prevents both arrogance in victory and collapse in defeat.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: MULTI-DOMAIN -->
+<section class="deep-section">
+  <div class="container">
+    <div class="deep-header">
+      <div class="deep-number">V</div>
+      <div class="deep-title-group">
+        <span class="deep-category">Multi-Domain Strategy</span>
+        <h2 class="deep-title">Why Doing More<br>Can Mean Doing Better</h2>
+      </div>
+    </div>
+
+    <p style="font-size:0.9rem; color:var(--mist); margin-bottom:2rem; line-height:1.9; font-style:italic;">
+      The common assumption: doing multiple things divides your capacity. Gu's case suggests the opposite — under the right conditions, doing more can enhance each individual domain.
+    </p>
+
+    <ul class="habits-list">
+      <li class="habit-item">
+        <div class="habit-icon">⇄</div>
+        <div>
+          <div class="habit-name">Cross-domain Reinforcement, Not Competition</div>
+          <div class="habit-desc">Skiing builds extreme focus capacity → transferred to academic study, compressing learning time. Physics and mathematics sharpen spatial reasoning → directly improves athletic technique analysis. Fashion and public performance train composure under observation → strengthens competition psychology. Each domain feeds the others.</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">◈</div>
+        <div>
+          <div class="habit-name">Strategic Line-cutting at Key Moments</div>
+          <div class="habit-desc">She deferred Stanford by a year to focus entirely on Olympic preparation. Multi-domain is her default state — single-domain focus is a deliberate strategic choice at critical junctures. The skill is knowing which mode the moment requires.</div>
+        </div>
+      </li>
+      <li class="habit-item">
+        <div class="habit-icon">◎</div>
+        <div>
+          <div class="habit-name">The Real Secret Behind "Studying in Spare Moments"</div>
+          <div class="habit-desc">It's not just time efficiency — it's focus density. Each learning session, though brief, is 100% concentrated. The replicable part: context-switching habits and micro-session discipline. The harder-to-replicate part: the baseline focus capacity built through years of athletic training.</div>
+        </div>
+      </li>
+    </ul>
+
+    <div style="margin-top:2.5rem; padding:2rem; background:var(--snow); border-left:3px solid var(--gold);">
+      <p style="font-family:'DM Sans',sans-serif; font-weight:500; font-size:0.88rem; color:var(--ink); margin-bottom:1.2rem; letter-spacing:0.03em;">Decision Framework: Should You Go Multi-domain or Focus?</p>
+      <div style="display:grid; gap:0.8rem;">
+        <div style="font-size:0.83rem; color:#5a5448; line-height:1.8;">
+          <strong style="color:var(--ink);">Question 1:</strong> Do your pursuits reinforce each other, or compete for the same resource?<br>
+          <span style="color:var(--mist);">→ Reinforcing: maintain multi-domain, with dedicated focus blocks per domain</span><br>
+          <span style="color:var(--mist);">→ Competing: narrow down, master one first</span>
+        </div>
+        <div style="font-size:0.83rem; color:#5a5448; line-height:1.8;">
+          <strong style="color:var(--ink);">Question 2:</strong> Is the bottleneck energy, or method?<br>
+          <span style="color:var(--mist);">→ Energy: reduce load</span><br>
+          <span style="color:var(--mist);">→ Method: narrowing focus won't help — fix the method first</span>
+        </div>
+        <div style="font-size:0.83rem; color:#5a5448; line-height:1.8;">
+          <strong style="color:var(--ink);">Question 3:</strong> Have you built the habit of single-task focus?<br>
+          <span style="color:var(--mist);">→ Not yet: start here — multi-domain without this becomes multi-distraction</span><br>
+          <span style="color:var(--mist);">→ Yes: cautiously expand, observe whether domains reinforce or drain</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: BRAIN MIND BODY -->
+<section class="deep-section">
+  <div class="container">
+    <div class="deep-header">
+      <div class="deep-number">VI</div>
+      <div class="deep-title-group">
+        <span class="deep-category">Integrated Performance System</span>
+        <h2 class="deep-title">Brain · Mind · Body<br>as One System</h2>
+      </div>
+    </div>
+
+    <p style="font-size:0.9rem; color:var(--mist); margin-bottom:2.5rem; line-height:1.9;">
+      What makes Gu's system distinctive isn't any single habit — it's that her cognitive, psychological, and physical practices operate in concert. This is what neuroscientists and performance researchers call <strong style="color:var(--ink);">integrated training</strong>: each layer reinforcing the others until the system runs automatically.
+    </p>
+
+    <div class="integration-grid">
+      <div class="integration-col">
+        <span class="integration-label">Brain · Cognitive Layer</span>
+        <ul class="integration-items">
+          <li>5-angle mental simulation before execution</li>
+          <li>Single-task context switching</li>
+          <li>Goal decomposition: vision → daily action</li>
+          <li>Metacognition: analyzing her own thinking patterns</li>
+          <li>Journaling to externalize and process cognition</li>
+        </ul>
+      </div>
+      <div class="integration-col">
+        <span class="integration-label">Mind · Awareness Layer</span>
+        <ul class="integration-items">
+          <li>Intrinsic motivation as stable foundation</li>
+          <li>Full presence: 100% here, now</li>
+          <li>Emotional containers: 5-min cry, then redirect</li>
+          <li>Reframing failure as avoidance, not outcome</li>
+          <li>Imagination kept alive as creative resource</li>
+        </ul>
+      </div>
+      <div class="integration-col">
+        <span class="integration-label">Body · Somatic Layer</span>
+        <ul class="integration-items">
+          <li>10-hour sleep as biological baseline</li>
+          <li>Fear → adrenaline → performance fuel</li>
+          <li>Motor memory: trained to run below conscious effort</li>
+          <li>Physical rituals for mental state transitions</li>
+          <li>Running and movement for cognitive reset</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="science-box">
+      <span class="science-label">Neuroplasticity</span>
+      <p class="science-text">Fortune and leading researchers describe Gu's approach as deliberate <strong>neuroplasticity training</strong>: the small choices repeated daily strengthen neural circuits, making high-performance behaviors increasingly automatic. <strong>The brain doesn't distinguish between mental and physical practice</strong> — both reshape its architecture. Her system works because it targets all three levels simultaneously: cognitive patterns, emotional regulation, and somatic habits. When these align, performance stops feeling like effort and starts feeling like expression.</p>
+    </div>
+
+    <div class="science-box" style="margin-top:1rem;">
+      <span class="science-label">Imagination &amp; Journaling</span>
+      <p class="science-text">TIME Magazine's deep profile reveals she <strong>played imagination games until 6th grade</strong> — her mother worried she was too old for it. Gu believes this habit still pays dividends today. Separately, she journals extensively — not as a mood diary, but as a tool to <strong>externalize and analyze her thinking</strong>. Writing moves cognition from reactive loop to deliberate processing, slowing the amygdala and creating the pause between stimulus and response where agency lives.</p>
+    </div>
+
+    <div class="quote-block" style="margin-top:2.5rem;">
+      <p class="quote-text">The real flex isn't the medals or the money — it's that every day I can rewire my brain, tune my mindset toward the future I want, and get one step closer to becoming the person that me at age 8 would revere.</p>
+      <p class="quote-attr">— Eileen Gu, Fortune Interview, 2026</p>
+    </div>
+  </div>
+</section>
+
+<!-- TAKEAWAYS -->
+<section style="background: var(--slate); padding: 5rem 0;">
+  <div class="container">
+    <span class="section-tag" style="color:var(--gold-light); border-color:rgba(184,136,42,0.4);">Apply It</span>
+    <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(1.5rem,3vw,2.2rem); color:#fff; margin-top:1.5rem; margin-bottom:0.5rem;">What You Can Start Today</h2>
+    <p style="color:rgba(255,255,255,0.35); font-size:0.83rem; margin-bottom:3rem; letter-spacing:0.1em; text-transform:uppercase;">No talent required. Only system.</p>
+
+    <div class="takeaways-grid">
+      <div class="takeaway-card">
+        <div class="takeaway-step">Practice 01</div>
+        <div class="takeaway-title">Single-task Focus Blocks</div>
+        <div class="takeaway-body">List today's tasks. Do one at a time. Use a physical ritual to transition between them — stand up, make tea, change rooms. This signals your brain to close one context and open another.</div>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-step">Practice 02</div>
+        <div class="takeaway-title">Redefine Your Failure</div>
+        <div class="takeaway-body">Write down what you currently call "failure." Then ask: is this truly failure, or just an outcome? Apply Gu's standard: the only real failure is choosing not to try.</div>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-step">Practice 03</div>
+        <div class="takeaway-title">The 5-Minute Emotion Protocol</div>
+        <div class="takeaway-body">Next time you're emotionally overwhelmed: set a 5-minute timer, feel it fully. When it ends, write one specific next action. Emotion processed, forward motion restored.</div>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-step">Practice 04</div>
+        <div class="takeaway-title">Sleep as Performance Tool</div>
+        <div class="takeaway-body">Reframe sleep from "lost time" to "performance investment." Set a consistent sleep time. Track how sleep quality affects your output the following day.</div>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-step">Practice 05</div>
+        <div class="takeaway-title">Multi-angle Mental Rehearsal</div>
+        <div class="takeaway-body">Before an important presentation, conversation, or challenge: close your eyes and rehearse from multiple perspectives. Feel the environment, hear the sounds, anticipate the variables. Then go.</div>
+      </div>
+      <div class="takeaway-card">
+        <div class="takeaway-step">Practice 06</div>
+        <div class="takeaway-title">The Daily Process Audit</div>
+        <div class="takeaway-body">Each evening, ask only: "Did I do everything within my control today?" Not "Did I win?" The answer to this question is the foundation of Gu's confidence — and it can be yours.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="report-footer">
+  <div class="container">
+    <div class="footer-logo">Eileen Gu · The Performance System</div>
+    <p>Research compiled from public interviews &amp; media · 2026 · <a href="index.html" style="color:var(--gold); text-decoration:none;">中文版 →</a></p>
+  </div>
+</footer>
+
+<script>
+  // Snowflakes
+  const container = document.getElementById('snowflakes');
+  const symbols = ['❄', '·', '∗', '⊹', '✦'];
+  for (let i = 0; i < 35; i++) {
+    const sf = document.createElement('div');
+    sf.className = 'sf';
+    sf.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    sf.style.left = Math.random() * 100 + 'vw';
+    sf.style.animationDuration = (7 + Math.random() * 14) + 's';
+    sf.style.animationDelay = (Math.random() * 12) + 's';
+    sf.style.fontSize = (5 + Math.random() * 8) + 'px';
+    container.appendChild(sf);
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.habit-item, .belief-row, .takeaway-card, .quote-block, .science-box, .integration-col').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(18px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
